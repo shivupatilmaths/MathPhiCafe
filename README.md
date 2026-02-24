@@ -8,6 +8,8 @@ A full-stack **CBSE Student Management Platform** built with Flask for coaching 
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/shivupatilmaths/MathPhiCafe)
+
 ---
 
 ## Features
@@ -161,6 +163,26 @@ Open **http://localhost:5000** in your browser.
 | `Testimonial` | Student testimonials with star ratings |
 | `ContactMessage` | Contact form submissions with read tracking |
 | `SiteSetting` | Key-value site configuration |
+
+---
+
+## Deployment
+
+### Deploy to Render (Free)
+
+Click the button below for one-click deployment:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/shivupatilmaths/MathPhiCafe)
+
+Or deploy manually:
+
+1. Create a [Render](https://render.com) account (free)
+2. Click **New > Web Service** and connect your GitHub repo
+3. Render auto-detects `render.yaml` and configures everything
+4. The build script installs dependencies and seeds the database
+5. Your app will be live at `https://mathphicafe.onrender.com`
+
+> **Note:** On Render's free tier, the service spins down after 15 minutes of inactivity. The first request after inactivity may take ~30 seconds.
 
 ---
 
