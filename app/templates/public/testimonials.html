@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import star_rating %}
+{% block title %}Testimonials - {{ site_settings.get('site_name', 'MathφCafe') }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header min-vh-40 d-flex align-items-end">
+    <div class="container pb-4">
+        <h1 class="text-white fw-bold" data-aos="fade-up">Testimonials</h1>
+        <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="100">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ url_for('public.home') }}" class="text-white-50">Home</a></li>
+                <li class="breadcrumb-item text-white active">Testimonials</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">Student <span class="text-gradient">Reviews</span></h2>
+            <p class="section-subtitle text-muted">What our students and parents have to say</p>
+        </div>
+        <div class="row g-4">
+            {% for t in testimonials %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ (loop.index0 % 3) * 100 }}">
+                <div class="testimonial-card p-4 h-100">
+                    <div class="mb-3">{{ star_rating(t.rating) }}</div>
+                    <p class="text-muted mb-4">"{{ t.content }}"</p>
+                    <div class="d-flex align-items-center mt-auto">
+                        <div class="rounded-circle bg-primary-soft d-flex align-items-center justify-content-center me-3" style="width:45px;height:45px">
+                            <i class="bi bi-person text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">{{ t.student_name }}</h6>
+                            {% if t.grade %}<small class="text-muted">{{ t.grade }}</small>{% endif %}
+                        </div>
+                        {% if t.is_featured %}
+                        <span class="badge bg-warning text-dark ms-auto"><i class="bi bi-star-fill me-1"></i>Featured</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-chat-quote display-1 text-muted mb-3"></i>
+                <h4 class="text-muted">No testimonials yet!</h4>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

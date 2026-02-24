@@ -1,0 +1,110 @@
+{# Render a form field with Bootstrap styling #}
+{% macro render_field(field, placeholder='', class='') %}
+<div class="mb-3">
+    {% if field.type != 'BooleanField' %}
+        <label for="{{ field.id }}" class="form-label">{{ field.label.text }}
+            {% if field.flags.required %}<span class="text-danger">*</span>{% endif %}
+        </label>
+    {% endif %}
+
+    {% if field.type == 'TextAreaField' %}
+        {{ field(class='form-control ' + class, placeholder=placeholder, rows=4, **kwargs) }}
+    {% elif field.type == 'SelectField' %}
+        {{ field(class='form-select ' + class, **kwargs) }}
+    {% elif field.type == 'BooleanField' %}
+        <div class="form-check">
+            {{ field(class='form-check-input ' + class, **kwargs) }}
+            <label class="form-check-label" for="{{ field.id }}">{{ field.label.text }}</label>
+        </div>
+    {% elif field.type == 'FileField' %}
+        {{ field(class='form-control ' + class, **kwargs) }}
+    {% else %}
+        {{ field(class='form-control ' + class, placeholder=placeholder, **kwargs) }}
+    {% endif %}
+
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endmacro %}
+
+
+{# Render Bootstrap pagination #}
+{% macro render_pagination(pagination, endpoint) %}
+{% if pagination.pages > 1 %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+            <a class="page-link" href="{{ url_for(endpoint, page=pagination.prev_num, **kwargs) }}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        {% for page in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page %}
+                <li class="page-item {% if page == pagination.page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for(endpoint, page=page, **kwargs) }}">{{ page }}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+            <a class="page-link" href="{{ url_for(endpoint, page=pagination.next_num, **kwargs) }}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+{% endmacro %}
+
+
+{# Delete confirmation modal #}
+{% macro confirm_delete(id, name, action_url) %}
+<div class="modal fade" id="deleteModal{{ id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <strong>{{ name }}</strong>? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{{ action_url }}" method="POST" style="display:inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+
+{# Star rating display #}
+{% macro star_rating(rating) %}
+<div class="star-rating">
+    {% for i in range(1, 6) %}
+        <i class="bi {% if i <= rating %}bi-star-fill{% else %}bi-star{% endif %} text-warning"></i>
+    {% endfor %}
+</div>
+{% endmacro %}
+
+
+{# Priority badge #}
+{% macro priority_badge(priority) %}
+{% if priority == 'urgent' %}
+    <span class="badge bg-danger">Urgent</span>
+{% elif priority == 'high' %}
+    <span class="badge bg-warning text-dark">High</span>
+{% elif priority == 'normal' %}
+    <span class="badge bg-info">Normal</span>
+{% else %}
+    <span class="badge bg-secondary">Low</span>
+{% endif %}
+{% endmacro %}

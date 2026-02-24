@@ -1,0 +1,64 @@
+<!-- Admin Sidebar -->
+<div class="col-lg-2 d-none d-lg-block admin-sidebar">
+    <div class="sidebar-header">
+        <h5><i class="bi bi-shield-check me-2"></i>Admin Panel</h5>
+        <small>{{ current_user.full_name }}</small>
+    </div>
+
+    <div class="sidebar-section-title">Main</div>
+    <a href="{{ url_for('admin.dashboard') }}" class="nav-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+        <i class="bi bi-speedometer2"></i>Dashboard
+    </a>
+
+    <div class="sidebar-section-title">Management</div>
+    <a href="{{ url_for('admin.students') }}" class="nav-link {% if 'student' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-people"></i>Students
+    </a>
+    <a href="{{ url_for('admin.batches') }}" class="nav-link {% if 'batch' in request.endpoint or 'enroll' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-collection"></i>Batches
+    </a>
+    <a href="{{ url_for('admin.results') }}" class="nav-link {% if 'result' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-clipboard-data"></i>Results
+    </a>
+    <a href="{{ url_for('admin.faculty') }}" class="nav-link {% if 'faculty' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-person-badge"></i>Faculty
+    </a>
+
+    <div class="sidebar-section-title">Content</div>
+    <a href="{{ url_for('admin.announcements') }}" class="nav-link {% if 'announcement' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-megaphone"></i>Announcements
+    </a>
+    <a href="{{ url_for('admin.gallery') }}" class="nav-link {% if 'gallery' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-images"></i>Gallery
+    </a>
+    <a href="{{ url_for('admin.notes') }}" class="nav-link {% if 'note' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-file-earmark-pdf"></i>Notes
+    </a>
+    <a href="{{ url_for('admin.testimonials') }}" class="nav-link {% if 'testimonial' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-chat-quote"></i>Testimonials
+    </a>
+
+    <div class="sidebar-section-title">System</div>
+    <a href="{{ url_for('admin.messages') }}" class="nav-link {% if 'message' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-envelope"></i>Messages
+        {% set unread = unread_messages_count if unread_messages_count is defined else 0 %}
+        {% if unread %}<span class="badge bg-danger">{{ unread }}</span>{% endif %}
+    </a>
+    <a href="{{ url_for('admin.settings') }}" class="nav-link {% if 'settings' in request.endpoint %}active{% endif %}">
+        <i class="bi bi-sliders"></i>Settings
+    </a>
+</div>
+
+<!-- Mobile Nav -->
+<div class="col-12 d-lg-none admin-mobile-nav" style="margin-top:76px">
+    <a href="{{ url_for('admin.dashboard') }}" {% if request.endpoint == 'admin.dashboard' %}class="active"{% endif %}><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a href="{{ url_for('admin.students') }}" {% if 'student' in request.endpoint %}class="active"{% endif %}><i class="bi bi-people"></i> Students</a>
+    <a href="{{ url_for('admin.batches') }}" {% if 'batch' in request.endpoint %}class="active"{% endif %}><i class="bi bi-collection"></i> Batches</a>
+    <a href="{{ url_for('admin.results') }}" {% if 'result' in request.endpoint %}class="active"{% endif %}><i class="bi bi-clipboard-data"></i> Results</a>
+    <a href="{{ url_for('admin.faculty') }}" {% if 'faculty' in request.endpoint %}class="active"{% endif %}><i class="bi bi-person-badge"></i> Faculty</a>
+    <a href="{{ url_for('admin.announcements') }}" {% if 'announcement' in request.endpoint %}class="active"{% endif %}><i class="bi bi-megaphone"></i> Announce</a>
+    <a href="{{ url_for('admin.gallery') }}" {% if 'gallery' in request.endpoint %}class="active"{% endif %}><i class="bi bi-images"></i> Gallery</a>
+    <a href="{{ url_for('admin.notes') }}" {% if 'note' in request.endpoint %}class="active"{% endif %}><i class="bi bi-file-earmark-pdf"></i> Notes</a>
+    <a href="{{ url_for('admin.messages') }}" {% if 'message' in request.endpoint %}class="active"{% endif %}><i class="bi bi-envelope"></i> Messages</a>
+    <a href="{{ url_for('admin.settings') }}" {% if 'settings' in request.endpoint %}class="active"{% endif %}><i class="bi bi-sliders"></i> Settings</a>
+</div>

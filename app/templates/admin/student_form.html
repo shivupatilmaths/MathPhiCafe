@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
+{% block title %}{{ 'Edit Student' if editing else 'Add Student' }} - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <nav class="admin-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.students') }}">Students</a></li>
+                    <li class="breadcrumb-item active">{{ 'Edit' if editing else 'Add' }}</li>
+                </ol>
+            </nav>
+
+            <div class="admin-page-header">
+                <h2><i class="bi bi-{{ 'pencil' if editing else 'person-plus' }} me-2"></i>{{ 'Edit Student' if editing else 'Add New Student' }}</h2>
+            </div>
+
+            <div class="admin-card card">
+                <div class="card-body p-4">
+                    <form method="POST" class="admin-form">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-6">{{ render_field(form.full_name, placeholder='Full name') }}</div>
+                            <div class="col-md-6">{{ render_field(form.email, placeholder='student@email.com') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">{{ render_field(form.phone, placeholder='+91 XXXXX XXXXX') }}</div>
+                            <div class="col-md-4">{{ render_field(form.grade) }}</div>
+                            <div class="col-md-4">{{ render_field(form.date_of_birth) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ render_field(form.parent_name, placeholder='Parent/Guardian name') }}</div>
+                            <div class="col-md-6">{{ render_field(form.parent_phone, placeholder='Parent phone') }}</div>
+                        </div>
+                        {{ render_field(form.address, placeholder='Full address') }}
+
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-lg me-1"></i>{{ 'Update' if editing else 'Add Student' }}
+                            </button>
+                            <a href="{{ url_for('admin.students') }}" class="btn btn-outline-secondary">Cancel</a>
+
+                            {% if editing %}
+                            <form action="{{ url_for('admin.reset_student_password', id=student.id) }}" method="POST" class="ms-auto">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-outline-warning" onclick="return confirm('Reset password for this student?')">
+                                    <i class="bi bi-key me-1"></i>Reset Password
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
+{% block title %}{{ 'Edit Testimonial' if editing else 'Add Testimonial' }} - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <nav class="admin-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.testimonials') }}">Testimonials</a></li>
+                    <li class="breadcrumb-item active">{{ 'Edit' if editing else 'Add' }}</li>
+                </ol>
+            </nav>
+
+            <div class="admin-page-header">
+                <h2><i class="bi bi-chat-quote me-2"></i>{{ 'Edit Testimonial' if editing else 'Add Testimonial' }}</h2>
+            </div>
+
+            <div class="admin-card card">
+                <div class="card-body p-4">
+                    <form method="POST" class="admin-form">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-4">{{ render_field(form.student_name, placeholder='Student name') }}</div>
+                            <div class="col-md-4">{{ render_field(form.grade, placeholder='e.g. Grade 12, 2025') }}</div>
+                            <div class="col-md-4">{{ render_field(form.rating) }}</div>
+                        </div>
+                        {{ render_field(form.content, placeholder='Write the testimonial...') }}
+                        {{ render_field(form.is_featured) }}
+
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-lg me-1"></i>{{ 'Update' if editing else 'Save' }}
+                            </button>
+                            <a href="{{ url_for('admin.testimonials') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

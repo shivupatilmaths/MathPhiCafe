@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
+{% block title %}{{ 'Edit Batch' if editing else 'Create Batch' }} - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <nav class="admin-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.batches') }}">Batches</a></li>
+                    <li class="breadcrumb-item active">{{ 'Edit' if editing else 'Create' }}</li>
+                </ol>
+            </nav>
+
+            <div class="admin-page-header">
+                <h2><i class="bi bi-{{ 'pencil' if editing else 'plus-circle' }} me-2"></i>{{ 'Edit Batch' if editing else 'Create New Batch' }}</h2>
+            </div>
+
+            <div class="admin-card card">
+                <div class="card-body p-4">
+                    <form method="POST" class="admin-form">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-6">{{ render_field(form.name, placeholder='e.g. Math Grade 10 - Morning') }}</div>
+                            <div class="col-md-6">{{ render_field(form.subject_id) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">{{ render_field(form.grade) }}</div>
+                            <div class="col-md-4">{{ render_field(form.faculty_id) }}</div>
+                            <div class="col-md-4">{{ render_field(form.max_students) }}</div>
+                        </div>
+                        {{ render_field(form.schedule, placeholder='e.g. Mon, Wed, Fri 4:00-5:30 PM') }}
+                        <div class="row">
+                            <div class="col-md-6">{{ render_field(form.start_date) }}</div>
+                            <div class="col-md-6">{{ render_field(form.end_date) }}</div>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-lg me-1"></i>{{ 'Update' if editing else 'Create Batch' }}
+                            </button>
+                            <a href="{{ url_for('admin.batches') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

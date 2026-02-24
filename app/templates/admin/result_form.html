@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
+{% block title %}{{ 'Edit Result' if editing else 'Add Result' }} - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <nav class="admin-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.results') }}">Results</a></li>
+                    <li class="breadcrumb-item active">{{ 'Edit' if editing else 'Add' }}</li>
+                </ol>
+            </nav>
+
+            <div class="admin-page-header">
+                <h2><i class="bi bi-clipboard-{{ 'check' if editing else 'plus' }} me-2"></i>{{ 'Edit Result' if editing else 'Add Result' }}</h2>
+            </div>
+
+            <div class="admin-card card">
+                <div class="card-body p-4">
+                    <form method="POST" class="admin-form">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-6">{{ render_field(form.student_id) }}</div>
+                            <div class="col-md-6">{{ render_field(form.subject_id) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ render_field(form.exam_name, placeholder='e.g. Mid-Term Exam') }}</div>
+                            <div class="col-md-6">{{ render_field(form.exam_date) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ render_field(form.marks_obtained, placeholder='Marks obtained') }}</div>
+                            <div class="col-md-6">{{ render_field(form.total_marks, placeholder='Total marks') }}</div>
+                        </div>
+                        {{ render_field(form.remarks, placeholder='Optional remarks...') }}
+
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-lg me-1"></i>{{ 'Update' if editing else 'Save Result' }}
+                            </button>
+                            <a href="{{ url_for('admin.results') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

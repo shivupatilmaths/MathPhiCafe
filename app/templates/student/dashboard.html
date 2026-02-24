@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import priority_badge %}
+{% block title %}Dashboard - {{ site_settings.get('site_name', 'MathφCafe') }}{% endblock %}
+
+{% block content %}
+<div style="margin-top:76px;background:var(--light-bg);min-height:calc(100vh - 76px)">
+    <div class="container py-4">
+        <!-- Welcome -->
+        <div class="card border-0 shadow-sm mb-4" style="background:var(--gradient-primary)">
+            <div class="card-body p-4 text-white">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="mb-1">Welcome back, {{ current_user.full_name }}!</h3>
+                        <p class="mb-0 opacity-75">
+                            <span class="badge bg-white text-primary me-2">{{ current_user.student_id }}</span>
+                            Grade {{ current_user.grade }}
+                        </p>
+                    </div>
+                    <div class="col-auto d-none d-md-block">
+                        <i class="bi bi-mortarboard display-4 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <!-- Quick Stats -->
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm text-center p-3">
+                    <i class="bi bi-collection text-primary fs-3"></i>
+                    <h4 class="mt-2 mb-0">{{ batches|length }}</h4>
+                    <small class="text-muted">My Batches</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm text-center p-3">
+                    <i class="bi bi-clipboard-data fs-3" style="color:var(--secondary)"></i>
+                    <h4 class="mt-2 mb-0">{{ recent_results|length }}</h4>
+                    <small class="text-muted">Recent Results</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm text-center p-3">
+                    <i class="bi bi-megaphone fs-3" style="color:var(--accent)"></i>
+                    <h4 class="mt-2 mb-0">{{ announcements|length }}</h4>
+                    <small class="text-muted">Announcements</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{{ url_for('student.notes') }}" class="card border-0 shadow-sm text-center p-3 text-decoration-none">
+                    <i class="bi bi-file-earmark-pdf fs-3 text-warning"></i>
+                    <h5 class="mt-2 mb-0">Notes</h5>
+                    <small class="text-muted">Study Material</small>
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+            <!-- Announcements -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0 pt-3">
+                        <h5 class="mb-0"><i class="bi bi-megaphone me-2 text-primary"></i>Announcements</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        {% for ann in announcements %}
+                        <div class="p-3 {% if not loop.last %}border-bottom{% endif %}">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">{{ ann.title }}</h6>
+                                    <p class="text-muted small mb-1">{{ ann.content[:120] }}{% if ann.content|length > 120 %}...{% endif %}</p>
+                                    <small class="text-muted">{{ ann.created_at.strftime('%d %b %Y') }}</small>
+                                </div>
+                                <div class="ms-2">{{ priority_badge(ann.priority) }}</div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <p class="text-muted text-center py-4 mb-0">No announcements</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Results -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0 pt-3 d-flex justify-content-between">
+                        <h5 class="mb-0"><i class="bi bi-clipboard-data me-2" style="color:var(--secondary)"></i>Recent Results</h5>
+                        <a href="{{ url_for('student.results') }}" class="small">View All</a>
+                    </div>
+                    <div class="card-body p-0">
+                        {% for r in recent_results %}
+                        <div class="p-3 {% if not loop.last %}border-bottom{% endif %}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0 small">{{ r.exam_name }}</h6>
+                                    <small class="text-muted">{{ r.subject.name }} | {{ r.exam_date.strftime('%d %b %Y') }}</small>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold">{{ r.marks_obtained }}/{{ r.total_marks }}</div>
+                                    <span class="badge {% if r.percentage >= 75 %}bg-success{% elif r.percentage >= 50 %}bg-warning text-dark{% else %}bg-danger{% endif %}">{{ r.percentage }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <p class="text-muted text-center py-4 mb-0">No results yet</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Batches -->
+        {% if batches %}
+        <div class="mt-3">
+            <h5 class="mb-3"><i class="bi bi-collection me-2 text-primary"></i>My Batches</h5>
+            <div class="row g-3">
+                {% for batch in batches %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title mb-1">{{ batch.name }}</h5>
+                            <span class="badge bg-primary-soft text-primary mb-2">{{ batch.subject.name }}</span>
+                            {% if batch.schedule %}
+                            <p class="small text-muted mb-1"><i class="bi bi-clock me-1"></i>{{ batch.schedule }}</p>
+                            {% endif %}
+                            {% if batch.faculty %}
+                            <p class="small text-muted mb-0"><i class="bi bi-person me-1"></i>{{ batch.faculty.full_name }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

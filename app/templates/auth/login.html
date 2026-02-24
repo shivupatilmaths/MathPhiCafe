@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Login - {{ site_settings.get('site_name', 'MathφCafe') }}{% endblock %}
+
+{% block content %}
+<section class="login-panel">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="text-center mb-4">
+                    <a href="{{ url_for('public.home') }}" class="text-decoration-none">
+                        <h2 class="text-white fw-bold">Math<span style="color: var(--secondary);">φ</span>Cafe</h2>
+                    </a>
+                    <p class="text-white-50">Sign in to your account</p>
+                </div>
+                <div class="login-card card">
+                    <div class="card-body p-4">
+                        <!-- Role Tabs -->
+                        <ul class="nav nav-pills login-tabs justify-content-center mb-4" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link {% if role == 'student' %}active{% endif %}"
+                                   href="{{ url_for('auth.login', role='student') }}">
+                                    <i class="bi bi-mortarboard me-1"></i>Student
+                                </a>
+                            </li>
+                            <li class="nav-item ms-2">
+                                <a class="nav-link {% if role == 'admin' %}active{% endif %}"
+                                   href="{{ url_for('auth.login', role='admin') }}">
+                                    <i class="bi bi-shield-lock me-1"></i>Admin
+                                </a>
+                            </li>
+                        </ul>
+
+                        <form method="POST">
+                            {{ form.hidden_tag() }}
+                            <input type="hidden" name="role" value="{{ role }}">
+
+                            <div class="mb-3">
+                                <label for="username" class="form-label">
+                                    {% if role == 'admin' %}Username{% else %}Student ID{% endif %}
+                                </label>
+                                {{ form.username(class='form-control form-control-lg',
+                                    placeholder='Enter your ' + ('username' if role == 'admin' else 'Student ID (e.g. MPC-2026-001)')) }}
+                                {% for error in form.username.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="password" class="form-label">Password</label>
+                                {{ form.password(class='form-control form-control-lg', placeholder='Enter your password') }}
+                                {% for error in form.password.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('public.home') }}" class="text-white-50 text-decoration-none">
+                        <i class="bi bi-arrow-left me-1"></i>Back to Website
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

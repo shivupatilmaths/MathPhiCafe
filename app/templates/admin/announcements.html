@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import priority_badge, confirm_delete %}
+{% block title %}Announcements - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <div class="admin-page-header">
+                <h2><i class="bi bi-megaphone me-2"></i>Announcements</h2>
+                <a href="{{ url_for('admin.add_announcement') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle me-1"></i>New Announcement
+                </a>
+            </div>
+
+            <div class="admin-table">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Target</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ann in announcements %}
+                        <tr>
+                            <td class="fw-500">{{ ann.title }}</td>
+                            <td><span class="badge bg-primary-soft text-primary">{{ ann.category }}</span></td>
+                            <td>{{ priority_badge(ann.priority) }}</td>
+                            <td>{% if ann.target_grade %}Grade {{ ann.target_grade }}{% else %}All Grades{% endif %}</td>
+                            <td>
+                                {% if ann.is_active %}
+                                <span class="badge badge-active">Active</span>
+                                {% else %}
+                                <span class="badge badge-inactive">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td class="small text-muted">{{ ann.created_at.strftime('%d %b %Y') }}</td>
+                            <td>
+                                <a href="{{ url_for('admin.edit_announcement', id=ann.id) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ ann.id }}"><i class="bi bi-trash"></i></button>
+                                {{ confirm_delete(ann.id, ann.title, url_for('admin.delete_announcement', id=ann.id)) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="7" class="text-center py-4 text-muted">No announcements</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

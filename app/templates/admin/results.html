@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_pagination, confirm_delete %}
+{% block title %}Results - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <div class="admin-page-header">
+                <h2><i class="bi bi-clipboard-data me-2"></i>Results</h2>
+                <a href="{{ url_for('admin.add_result') }}" class="btn btn-primary">
+                    <i class="bi bi-clipboard-plus me-1"></i>Add Result
+                </a>
+            </div>
+
+            <div class="admin-table">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Subject</th>
+                            <th>Exam</th>
+                            <th>Date</th>
+                            <th>Marks</th>
+                            <th>%</th>
+                            <th>Grade</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in results.items %}
+                        <tr>
+                            <td>
+                                <div class="fw-500 small">{{ r.student.full_name }}</div>
+                                <small class="text-muted">{{ r.student.student_id }}</small>
+                            </td>
+                            <td>{{ r.subject.name }}</td>
+                            <td class="small">{{ r.exam_name }}</td>
+                            <td class="small text-muted">{{ r.exam_date.strftime('%d %b %Y') }}</td>
+                            <td>{{ r.marks_obtained }}/{{ r.total_marks }}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="progress flex-grow-1" style="height:6px;width:60px">
+                                        <div class="progress-bar {% if r.percentage >= 75 %}bg-success{% elif r.percentage >= 50 %}bg-warning{% else %}bg-danger{% endif %}"
+                                             style="width:{{ r.percentage }}%"></div>
+                                    </div>
+                                    <small>{{ r.percentage }}%</small>
+                                </div>
+                            </td>
+                            <td><span class="badge {% if r.grade_letter in ['A1','A2'] %}bg-success{% elif r.grade_letter in ['B1','B2'] %}bg-primary{% elif r.grade_letter in ['C1','C2'] %}bg-warning text-dark{% else %}bg-danger{% endif %}">{{ r.grade_letter }}</span></td>
+                            <td>
+                                <a href="{{ url_for('admin.edit_result', id=r.id) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ r.id }}"><i class="bi bi-trash"></i></button>
+                                {{ confirm_delete(r.id, r.exam_name, url_for('admin.delete_result', id=r.id)) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="8" class="text-center py-4 text-muted">No results found</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {{ render_pagination(results, 'admin.results') }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
+{% block title %}Upload Note - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <nav class="admin-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('admin.notes') }}">Notes</a></li>
+                    <li class="breadcrumb-item active">Upload</li>
+                </ol>
+            </nav>
+
+            <div class="admin-page-header">
+                <h2><i class="bi bi-upload me-2"></i>Upload Study Note</h2>
+            </div>
+
+            <div class="admin-card card">
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data" class="admin-form">
+                        {{ form.hidden_tag() }}
+                        {{ render_field(form.title, placeholder='Note title') }}
+                        <div class="row">
+                            <div class="col-md-4">{{ render_field(form.subject_id) }}</div>
+                            <div class="col-md-4">{{ render_field(form.grade) }}</div>
+                            <div class="col-md-4">{{ render_field(form.chapter, placeholder='e.g. Chapter 1') }}</div>
+                        </div>
+                        {{ render_field(form.file) }}
+                        <small class="text-muted d-block mb-3">Only PDF files allowed. Max size: 16 MB.</small>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-upload me-1"></i>Upload Note
+                            </button>
+                            <a href="{{ url_for('admin.notes') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

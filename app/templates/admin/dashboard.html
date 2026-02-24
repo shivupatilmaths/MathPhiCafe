@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard - {{ site_settings.get('site_name', 'MathφCafe') }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        <!-- Sidebar -->
+        {% include 'admin/_sidebar.html' %}
+
+        <!-- Main Content -->
+        <div class="col-lg-10 admin-main">
+            <div class="admin-page-header">
+                <h2><i class="bi bi-speedometer2 me-2"></i>Dashboard</h2>
+            </div>
+
+            <!-- Stats -->
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-card-admin stat-grad-1">
+                        <i class="bi bi-people stat-icon"></i>
+                        <h3>{{ stats.students }}</h3>
+                        <p>Active Students</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-card-admin stat-grad-2">
+                        <i class="bi bi-collection stat-icon"></i>
+                        <h3>{{ stats.batches }}</h3>
+                        <p>Active Batches</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-card-admin stat-grad-3">
+                        <i class="bi bi-envelope stat-icon"></i>
+                        <h3>{{ stats.messages }}</h3>
+                        <p>Unread Messages</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-card-admin stat-grad-4">
+                        <i class="bi bi-megaphone stat-icon"></i>
+                        <h3>{{ stats.announcements }}</h3>
+                        <p>Announcements</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <!-- Quick Actions -->
+                <div class="col-lg-4">
+                    <div class="admin-card card h-100">
+                        <div class="card-header"><i class="bi bi-lightning me-2"></i>Quick Actions</div>
+                        <div class="card-body d-grid gap-2">
+                            <a href="{{ url_for('admin.add_student') }}" class="quick-action-btn btn btn-outline-primary text-start">
+                                <i class="bi bi-person-plus me-2"></i>Add Student
+                            </a>
+                            <a href="{{ url_for('admin.add_batch') }}" class="quick-action-btn btn btn-outline-primary text-start">
+                                <i class="bi bi-plus-circle me-2"></i>Create Batch
+                            </a>
+                            <a href="{{ url_for('admin.add_result') }}" class="quick-action-btn btn btn-outline-primary text-start">
+                                <i class="bi bi-clipboard-plus me-2"></i>Add Result
+                            </a>
+                            <a href="{{ url_for('admin.add_announcement') }}" class="quick-action-btn btn btn-outline-primary text-start">
+                                <i class="bi bi-megaphone me-2"></i>New Announcement
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Students -->
+                <div class="col-lg-4">
+                    <div class="admin-card card h-100">
+                        <div class="card-header"><i class="bi bi-people me-2"></i>Recent Students</div>
+                        <div class="card-body p-0">
+                            {% for student in recent_students %}
+                            <div class="d-flex align-items-center p-3 {% if not loop.last %}border-bottom{% endif %}">
+                                <div class="rounded-circle bg-primary-soft d-flex align-items-center justify-content-center me-3" style="width:38px;height:38px;flex-shrink:0">
+                                    <i class="bi bi-person text-primary small"></i>
+                                </div>
+                                <div class="flex-grow-1 min-w-0">
+                                    <h6 class="mb-0 small">{{ student.full_name }}</h6>
+                                    <small class="text-muted">{{ student.student_id }} | Grade {{ student.grade }}</small>
+                                </div>
+                            </div>
+                            {% else %}
+                            <p class="text-muted text-center py-4 mb-0">No students yet</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Messages -->
+                <div class="col-lg-4">
+                    <div class="admin-card card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-envelope me-2"></i>Recent Messages</span>
+                            <a href="{{ url_for('admin.messages') }}" class="small">View All</a>
+                        </div>
+                        <div class="card-body p-0">
+                            {% for msg in recent_messages %}
+                            <a href="{{ url_for('admin.view_message', id=msg.id) }}" class="message-item d-block text-decoration-none {% if not msg.is_read %}unread{% endif %}">
+                                <div class="message-sender text-dark small">{{ msg.name }}</div>
+                                <div class="text-muted small text-truncate">{{ msg.subject or msg.message[:50] }}</div>
+                                <div class="text-muted" style="font-size:0.7rem">{{ msg.created_at.strftime('%d %b, %H:%M') }}</div>
+                            </a>
+                            {% else %}
+                            <p class="text-muted text-center py-4 mb-0">No messages</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_pagination, confirm_delete %}
+{% block title %}Students - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <div class="admin-page-header">
+                <h2><i class="bi bi-people me-2"></i>Students</h2>
+                <a href="{{ url_for('admin.add_student') }}" class="btn btn-primary">
+                    <i class="bi bi-person-plus me-1"></i>Add Student
+                </a>
+            </div>
+
+            <!-- Search & Filter -->
+            <div class="search-filter-bar d-flex flex-wrap gap-2 align-items-center">
+                <form class="d-flex gap-2 flex-grow-1" method="GET">
+                    <div class="input-group" style="max-width:350px">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" name="search" class="form-control" placeholder="Search by name or ID..." value="{{ search }}">
+                    </div>
+                    <select name="grade" class="form-select" style="max-width:150px">
+                        <option value="0">All Grades</option>
+                        {% for g in [9,10,11,12] %}
+                        <option value="{{ g }}" {% if grade_filter == g %}selected{% endif %}>Grade {{ g }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-outline-primary">Filter</button>
+                </form>
+            </div>
+
+            <!-- Students Table -->
+            <div class="admin-table mt-3">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Grade</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students.items %}
+                        <tr>
+                            <td><span class="badge bg-primary-soft text-primary">{{ s.student_id }}</span></td>
+                            <td class="fw-500">{{ s.full_name }}</td>
+                            <td>Grade {{ s.grade }}</td>
+                            <td class="small">{{ s.email }}</td>
+                            <td class="small">{{ s.phone or '-' }}</td>
+                            <td class="small text-muted">{{ s.created_at.strftime('%d %b %Y') }}</td>
+                            <td>
+                                <a href="{{ url_for('admin.edit_student', id=s.id) }}" class="btn btn-sm btn-outline-primary" title="Edit">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ s.id }}" title="Delete">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                {{ confirm_delete(s.id, s.full_name, url_for('admin.delete_student', id=s.id)) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="7" class="text-center py-4 text-muted">No students found</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {{ render_pagination(students, 'admin.students', search=search, grade=grade_filter) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

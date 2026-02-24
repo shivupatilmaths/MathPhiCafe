@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import confirm_delete %}
+{% block title %}Notes - Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:76px">
+    <div class="row">
+        {% include 'admin/_sidebar.html' %}
+        <div class="col-lg-10 admin-main">
+            <div class="admin-page-header">
+                <h2><i class="bi bi-file-earmark-pdf me-2"></i>Study Notes</h2>
+                <a href="{{ url_for('admin.upload_note') }}" class="btn btn-primary">
+                    <i class="bi bi-upload me-1"></i>Upload Note
+                </a>
+            </div>
+
+            <div class="admin-table">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Subject</th>
+                            <th>Grade</th>
+                            <th>Chapter</th>
+                            <th>Size</th>
+                            <th>Uploaded</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for note in notes %}
+                        <tr>
+                            <td class="fw-500">
+                                <i class="bi bi-file-earmark-pdf text-danger me-1"></i>{{ note.title }}
+                            </td>
+                            <td>{{ note.subject.name }}</td>
+                            <td>Grade {{ note.grade }}</td>
+                            <td class="small">{{ note.chapter or '-' }}</td>
+                            <td class="small text-muted">
+                                {% if note.file_size %}
+                                    {{ (note.file_size / 1024 / 1024)|round(1) }} MB
+                                {% else %}-{% endif %}
+                            </td>
+                            <td class="small text-muted">{{ note.uploaded_at.strftime('%d %b %Y') }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ note.id }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                {{ confirm_delete(note.id, note.title, url_for('admin.delete_note', id=note.id)) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="7" class="text-center py-4 text-muted">No notes uploaded</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Study Notes - {{ site_settings.get('site_name', 'MathφCafe') }}{% endblock %}
+
+{% block content %}
+<div style="margin-top:76px;background:var(--light-bg);min-height:calc(100vh - 76px)">
+    <div class="container py-4">
+        <h3 class="mb-4"><i class="bi bi-file-earmark-pdf me-2 text-primary"></i>Study Notes</h3>
+
+        <!-- Subject Filter -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body py-2">
+                <form class="d-flex gap-2 align-items-center" method="GET">
+                    <label class="form-label mb-0 me-2 fw-500">Filter by Subject:</label>
+                    <select name="subject" class="form-select form-select-sm" style="max-width:200px" onchange="this.form.submit()">
+                        <option value="0">All Subjects</option>
+                        {% for s in subjects %}
+                        <option value="{{ s.id }}" {% if subject_filter == s.id %}selected{% endif %}>{{ s.name }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+
+        <!-- Notes Grid -->
+        <div class="row g-3">
+            {% for note in notes %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon-sm bg-danger bg-opacity-10 me-3">
+                                <i class="bi bi-file-earmark-pdf text-danger"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">{{ note.title }}</h6>
+                                <p class="small text-muted mb-1">{{ note.subject.name }}</p>
+                                {% if note.chapter %}
+                                <span class="badge bg-primary-soft text-primary" style="font-size:0.7rem">{{ note.chapter }}</span>
+                                {% endif %}
+                                {% if note.file_size %}
+                                <small class="text-muted ms-1">{{ (note.file_size / 1024 / 1024)|round(1) }} MB</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pt-0">
+                        <a href="{{ url_for('student.download_note', id=note.id) }}" class="btn btn-sm btn-outline-primary w-100">
+                            <i class="bi bi-download me-1"></i>Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-file-earmark-pdf display-4 text-muted"></i>
+                <p class="text-muted mt-2">No notes available for Grade {{ current_user.grade }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

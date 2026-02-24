@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+venv/
+env/
+.env
+
+# Instance folder (database, secrets)
+instance/
+
+# Uploads (user-generated content)
+app/static/uploads/avatars/*
+app/static/uploads/gallery/*
+app/static/uploads/notes/*
+app/static/uploads/thumbnails/*
+!app/static/uploads/avatars/.gitkeep
+!app/static/uploads/gallery/.gitkeep
+!app/static/uploads/notes/.gitkeep
+!app/static/uploads/thumbnails/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Migrations (optional - uncomment if not tracking)
+# migrations/
