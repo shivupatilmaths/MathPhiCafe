@@ -37,8 +37,12 @@ def create_app(config_class=Config):
             pass
         return dict(site_settings=settings)
 
-    # Create tables and upload directories
+    # Create instance directory, tables, and upload directories
     with app.app_context():
+        # Ensure the instance directory exists for SQLite database
+        instance_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'instance')
+        os.makedirs(instance_path, exist_ok=True)
+
         db.create_all()
         for folder_key in ['GALLERY_FOLDER', 'NOTES_FOLDER', 'AVATARS_FOLDER', 'THUMBNAILS_FOLDER']:
             path = app.config.get(folder_key, '')
