@@ -3,97 +3,242 @@
 {% block title %}{{ site_settings.get('site_name', 'MathφCafe') }} - Expert CBSE Coaching{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
+<!-- ========== HERO ========== -->
 <section class="hero-section">
     <div class="hero-overlay"></div>
+    <!-- Animated particles -->
+    <div class="hero-particles">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center min-vh-100">
             <div class="col-lg-6" data-aos="fade-right">
-                <h1 class="hero-title display-4 text-white fw-bold mb-3">
-                    Unlock Your <span style="color: var(--accent);">Mathematical</span> Potential
+                <div class="hero-badge mb-3">
+                    <span class="badge-dot"></span>Admissions Open 2026-27
+                </div>
+                <h1 class="hero-title display-3 text-white fw-bold mb-3">
+                    Where <span class="hero-highlight">Numbers</span> Come Alive
                 </h1>
-                <p class="text-white-50 fs-5 mb-4">
-                    Expert CBSE coaching for Grades 9-12 in Mathematics, Physics, Chemistry &amp; Computer Science.
+                <p class="text-white-50 fs-5 mb-4 pe-lg-5">
+                    Expert CBSE coaching for Grades 9–12 in Mathematics, Physics, Chemistry &amp; Computer Science. Transform your academic journey with personalized mentorship.
                 </p>
-                <div class="d-flex gap-3 flex-wrap">
-                    <a href="{{ url_for('public.subjects') }}" class="btn btn-light btn-lg px-4">
-                        <i class="bi bi-book me-2"></i>Explore Subjects
+                <div class="d-flex gap-3 flex-wrap mb-4">
+                    <a href="{{ url_for('public.contact') }}" class="btn btn-light btn-lg px-4 fw-semibold">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Enroll Now
                     </a>
-                    <a href="{{ url_for('public.contact') }}" class="btn btn-outline-light btn-lg px-4">
-                        <i class="bi bi-telephone me-2"></i>Contact Us
+                    <a href="#youtube-section" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-play-circle me-2"></i>Watch Demo
                     </a>
                 </div>
+                <!-- Trust badges -->
+                <div class="hero-trust d-flex align-items-center gap-4 flex-wrap">
+                    <div class="d-flex align-items-center">
+                        <div class="trust-avatars">
+                            <img src="https://ui-avatars.com/api/?name=A+S&background=6C63FF&color=fff&size=36" alt="" class="trust-avatar">
+                            <img src="https://ui-avatars.com/api/?name=P+K&background=FF6584&color=fff&size=36" alt="" class="trust-avatar">
+                            <img src="https://ui-avatars.com/api/?name=R+M&background=00C9A7&color=fff&size=36" alt="" class="trust-avatar">
+                            <img src="https://ui-avatars.com/api/?name=S+D&background=F59E0B&color=fff&size=36" alt="" class="trust-avatar">
+                        </div>
+                        <span class="text-white-50 small ms-2">500+ Students Trust Us</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-star-fill text-warning me-1"></i>
+                        <span class="text-white fw-semibold">4.9</span>
+                        <span class="text-white-50 small ms-1">Rating</span>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-6 d-none d-lg-block" data-aos="fade-left">
-                <div class="hero-illustration">
-                    <div class="floating-shape shape-1"></div>
-                    <div class="floating-shape shape-2"></div>
-                    <div class="floating-shape shape-3"></div>
-                    <div class="hero-icon-grid">
-                        <div class="hero-icon-item" style="--delay: 0s"><i class="bi bi-calculator"></i></div>
-                        <div class="hero-icon-item" style="--delay: 0.5s"><i class="bi bi-lightning"></i></div>
-                        <div class="hero-icon-item" style="--delay: 1s"><i class="bi bi-graph-up"></i></div>
-                        <div class="hero-icon-item" style="--delay: 1.5s"><i class="bi bi-cpu"></i></div>
-                        <div class="hero-icon-item" style="--delay: 2s"><i class="bi bi-mortarboard"></i></div>
-                        <div class="hero-icon-item" style="--delay: 2.5s"><i class="bi bi-award"></i></div>
+            <div class="col-lg-6 d-none d-lg-block" data-aos="fade-left" data-aos-delay="200">
+                <div class="hero-image-wrapper">
+                    <div class="hero-image-card">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop" alt="Students collaborating" class="hero-main-img">
+                    </div>
+                    <!-- Floating info cards -->
+                    <div class="hero-float-card hero-float-1" data-aos="fade-up" data-aos-delay="600">
+                        <i class="bi bi-mortarboard-fill text-primary"></i>
+                        <div>
+                            <strong>98%</strong>
+                            <small>Pass Rate</small>
+                        </div>
+                    </div>
+                    <div class="hero-float-card hero-float-2" data-aos="fade-up" data-aos-delay="800">
+                        <i class="bi bi-trophy-fill text-warning"></i>
+                        <div>
+                            <strong>50+</strong>
+                            <small>Toppers</small>
+                        </div>
+                    </div>
+                    <div class="hero-float-card hero-float-3" data-aos="fade-up" data-aos-delay="1000">
+                        <i class="bi bi-people-fill text-success"></i>
+                        <div>
+                            <strong>10+</strong>
+                            <small>Years Exp</small>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Wave divider -->
+    <div class="hero-wave">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z" fill="#ffffff"/>
+        </svg>
+    </div>
 </section>
 
-<!-- Stats -->
-<section class="stats-section py-4">
+<!-- ========== STATS ========== -->
+<section class="stats-section py-0">
     <div class="container">
-        <div class="row g-3 justify-content-center">
-            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="0">
-                <div class="stat-card text-center">
-                    <div class="stat-number" data-counter="{{ stats.students }}">0</div>
-                    <div class="stat-label">Students</div>
+        <div class="stats-bar" data-aos="fade-up">
+            <div class="row g-0">
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-icon-wrap bg-primary-soft"><i class="bi bi-people-fill text-primary"></i></div>
+                    <div class="stat-number" data-counter="{{ stats.students + 500 }}">0</div>
+                    <div class="stat-label">Happy Students</div>
                 </div>
-            </div>
-            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
-                <div class="stat-card text-center">
-                    <div class="stat-number" data-counter="{{ stats.faculty }}">0</div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-icon-wrap bg-secondary-soft"><i class="bi bi-person-workspace" style="color:var(--secondary)"></i></div>
+                    <div class="stat-number" data-counter="{{ stats.faculty + 10 }}">0</div>
                     <div class="stat-label">Expert Faculty</div>
                 </div>
-            </div>
-            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
-                <div class="stat-card text-center">
-                    <div class="stat-number" data-counter="{{ stats.batches }}">0</div>
-                    <div class="stat-label">Active Batches</div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-icon-wrap bg-accent-soft"><i class="bi bi-award-fill" style="color:var(--accent)"></i></div>
+                    <div class="stat-number" data-counter="98">0</div>
+                    <div class="stat-label">% Pass Rate</div>
                 </div>
-            </div>
-            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
-                <div class="stat-card text-center">
-                    <div class="stat-number" data-counter="{{ subjects|length }}">0</div>
-                    <div class="stat-label">Subjects</div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-icon-wrap bg-warning-soft"><i class="bi bi-calendar-check text-warning"></i></div>
+                    <div class="stat-number" data-counter="10">0</div>
+                    <div class="stat-label">Years of Excellence</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Subjects -->
-<section class="py-5">
+<!-- ========== ANNOUNCEMENTS TICKER ========== -->
+{% if announcements %}
+<section class="ticker-section">
+    <div class="container-fluid overflow-hidden">
+        <div class="ticker-wrap">
+            <div class="ticker-label"><i class="bi bi-megaphone-fill me-2"></i>NEWS</div>
+            <div class="ticker-content">
+                <div class="marquee-content">
+                    {% for ann in announcements %}
+                    <span class="ticker-item">
+                        {{ priority_badge(ann.priority) }}
+                        <span class="ms-2">{{ ann.title }}</span>
+                        <span class="text-muted ms-2 small">{{ ann.created_at.strftime('%d %b') }}</span>
+                    </span>
+                    {% endfor %}
+                    {% for ann in announcements %}
+                    <span class="ticker-item">
+                        {{ priority_badge(ann.priority) }}
+                        <span class="ms-2">{{ ann.title }}</span>
+                        <span class="text-muted ms-2 small">{{ ann.created_at.strftime('%d %b') }}</span>
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ========== ABOUT PREVIEW ========== -->
+<section class="py-5 mt-3">
     <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title">Our <span class="text-gradient">Subjects</span></h2>
-            <p class="section-subtitle text-muted">Comprehensive coaching across all CBSE streams</p>
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="about-preview-images">
+                    <div class="about-img-main">
+                        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=500&h=350&fit=crop" alt="Classroom" class="rounded-4 shadow-lg">
+                    </div>
+                    <div class="about-img-secondary">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=300&h=200&fit=crop" alt="Teaching" class="rounded-3 shadow">
+                    </div>
+                    <div class="about-exp-badge">
+                        <span class="exp-number">10+</span>
+                        <span class="exp-text">Years<br>Experience</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="section-badge mb-3">About Us</div>
+                <h2 class="section-title mb-3">Nurturing <span class="text-gradient">Bright Minds</span> Since 2016</h2>
+                <p class="text-muted mb-4">
+                    At MathφCafe, we believe every student has the potential to excel. Our dedicated team of educators combines years of experience with innovative teaching methods to make complex concepts simple and engaging.
+                </p>
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon-sm bg-primary-soft me-3"><i class="bi bi-check-circle-fill text-primary"></i></div>
+                            <div><h6 class="mb-1">CBSE Aligned</h6><small class="text-muted">Complete curriculum coverage</small></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon-sm bg-secondary-soft me-3"><i class="bi bi-check-circle-fill" style="color:var(--secondary)"></i></div>
+                            <div><h6 class="mb-1">Small Batches</h6><small class="text-muted">Max 25 students per batch</small></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon-sm bg-accent-soft me-3"><i class="bi bi-check-circle-fill" style="color:var(--accent)"></i></div>
+                            <div><h6 class="mb-1">Regular Tests</h6><small class="text-muted">Weekly assessments &amp; feedback</small></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon-sm bg-warning-soft me-3"><i class="bi bi-check-circle-fill text-warning"></i></div>
+                            <div><h6 class="mb-1">Doubt Clearing</h6><small class="text-muted">Extra sessions for tricky topics</small></div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('public.about') }}" class="btn btn-primary px-4">
+                    <i class="bi bi-arrow-right me-2"></i>Learn More About Us
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== SUBJECTS ========== -->
+<section class="py-5 bg-light-custom">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="section-badge mx-auto mb-3">What We Teach</div>
+            <h2 class="section-title" data-aos="fade-up">Our <span class="text-gradient">Subjects</span></h2>
+            <p class="section-subtitle text-muted" data-aos="fade-up" data-aos-delay="100">Comprehensive coaching across all major CBSE streams</p>
         </div>
         <div class="row g-4">
+            {% set subject_images = {
+                'MATH': 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=250&fit=crop',
+                'PHY': 'https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?w=400&h=250&fit=crop',
+                'CHEM': 'https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=400&h=250&fit=crop',
+                'BIO': 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=400&h=250&fit=crop',
+                'CS': 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop'
+            } %}
             {% for subject in subjects %}
             <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
                 <a href="{{ url_for('public.subject_detail', code=subject.code) }}" class="text-decoration-none">
-                    <div class="subject-card" style="--card-color: {{ subject.color or '#6C63FF' }}">
-                        <div class="subject-icon">
-                            <i class="bi {{ subject.icon or 'bi-book' }}"></i>
+                    <div class="subject-card-v2 hover-lift">
+                        <div class="subject-img-wrap">
+                            <img src="{{ subject_images.get(subject.code, 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&h=250&fit=crop') }}" alt="{{ subject.name }}">
+                            <div class="subject-img-overlay"></div>
+                            <div class="subject-icon-badge" style="background: {{ subject.color or '#6C63FF' }}">
+                                <i class="bi {{ subject.icon or 'bi-book' }}"></i>
+                            </div>
                         </div>
-                        <h4 class="text-white fw-bold mb-2">{{ subject.name }}</h4>
-                        <p class="text-white-50 small mb-0">{{ subject.description or 'Expert coaching for CBSE students' }}</p>
-                        <div class="subject-arrow">
-                            <i class="bi bi-arrow-right"></i>
+                        <div class="subject-card-body">
+                            <h5 class="mb-1">{{ subject.name }}</h5>
+                            <p class="text-muted small mb-2">{{ subject.description[:80] if subject.description else 'Expert coaching for CBSE students' }}...</p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="badge bg-light text-dark"><i class="bi bi-mortarboard me-1"></i>Grade 9-12</span>
+                                <span class="text-primary fw-semibold small">Explore <i class="bi bi-arrow-right"></i></span>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -103,96 +248,246 @@
     </div>
 </section>
 
-<!-- Why Choose Us -->
-<section class="py-5 bg-light-custom">
+<!-- ========== HOW IT WORKS ========== -->
+<section class="py-5">
     <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title">Why <span class="text-gradient">Choose Us</span></h2>
-            <p class="section-subtitle text-muted">What makes MathφCafe the best choice for your child</p>
+        <div class="text-center mb-5">
+            <div class="section-badge mx-auto mb-3">Our Process</div>
+            <h2 class="section-title" data-aos="fade-up">How <span class="text-gradient">Learning Works</span></h2>
+            <p class="section-subtitle text-muted" data-aos="fade-up" data-aos-delay="100">A structured approach to academic excellence</p>
         </div>
         <div class="row g-4">
             <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-                <div class="feature-card p-4 text-center">
-                    <div class="feature-icon bg-primary-soft mb-3">
-                        <i class="bi bi-people fs-3 text-primary"></i>
-                    </div>
-                    <h5>Expert Faculty</h5>
-                    <p class="text-muted small mb-0">Experienced teachers with proven track records in CBSE education.</p>
+                <div class="process-card text-center">
+                    <div class="process-number">01</div>
+                    <div class="process-icon"><i class="bi bi-person-plus-fill"></i></div>
+                    <h5>Enroll</h5>
+                    <p class="text-muted small">Choose your grade and subjects. Get enrolled in a small, focused batch.</p>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-card p-4 text-center">
-                    <div class="feature-icon bg-secondary-soft mb-3">
-                        <i class="bi bi-graph-up-arrow fs-3" style="color: var(--secondary)"></i>
-                    </div>
-                    <h5>Result Oriented</h5>
-                    <p class="text-muted small mb-0">Focused approach ensuring consistent improvement in academic performance.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-card p-4 text-center">
-                    <div class="feature-icon bg-accent-soft mb-3">
-                        <i class="bi bi-collection-play fs-3" style="color: var(--accent)"></i>
-                    </div>
-                    <h5>Study Material</h5>
-                    <p class="text-muted small mb-0">Comprehensive notes and resources aligned with CBSE curriculum.</p>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
+                <div class="process-card text-center">
+                    <div class="process-number">02</div>
+                    <div class="process-icon"><i class="bi bi-book-half"></i></div>
+                    <h5>Learn</h5>
+                    <p class="text-muted small">Attend interactive classes with expert faculty. Concept-based teaching.</p>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-card p-4 text-center">
-                    <div class="feature-icon bg-warning-soft mb-3">
-                        <i class="bi bi-person-check fs-3 text-warning"></i>
-                    </div>
-                    <h5>Personal Attention</h5>
-                    <p class="text-muted small mb-0">Small batch sizes to ensure every student gets individual guidance.</p>
+                <div class="process-card text-center">
+                    <div class="process-number">03</div>
+                    <div class="process-icon"><i class="bi bi-clipboard-check-fill"></i></div>
+                    <h5>Practice</h5>
+                    <p class="text-muted small">Weekly tests, assignments, and detailed performance tracking.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="450">
+                <div class="process-card text-center">
+                    <div class="process-number">04</div>
+                    <div class="process-icon"><i class="bi bi-trophy-fill"></i></div>
+                    <h5>Excel</h5>
+                    <p class="text-muted small">Achieve top grades with confidence. Our students consistently outperform.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Announcements Marquee -->
-{% if announcements %}
-<section class="py-3" style="background: var(--dark);">
-    <div class="container-fluid overflow-hidden">
-        <div class="marquee-content">
-            {% for ann in announcements %}
-                <span class="text-white-50 me-5">
-                    {{ priority_badge(ann.priority) }}
-                    <span class="text-white ms-2">{{ ann.title }}</span>
-                    <span class="text-white-50 ms-2 small">{{ ann.created_at.strftime('%d %b %Y') }}</span>
-                </span>
-            {% endfor %}
-            {% for ann in announcements %}
-                <span class="text-white-50 me-5">
-                    {{ priority_badge(ann.priority) }}
-                    <span class="text-white ms-2">{{ ann.title }}</span>
-                    <span class="text-white-50 ms-2 small">{{ ann.created_at.strftime('%d %b %Y') }}</span>
-                </span>
-            {% endfor %}
+<!-- ========== YOUTUBE SECTION ========== -->
+<section class="py-5 bg-light-custom" id="youtube-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="section-badge mx-auto mb-3"><i class="bi bi-youtube me-1"></i>Video Lessons</div>
+            <h2 class="section-title" data-aos="fade-up">Learn From Our <span class="text-gradient">YouTube Channel</span></h2>
+            <p class="section-subtitle text-muted" data-aos="fade-up" data-aos-delay="100">Free video lessons, tips, and problem-solving tutorials</p>
+        </div>
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8" data-aos="fade-right">
+                <div class="yt-main-video">
+                    <a href="{{ site_settings.get('social_youtube', '#') }}" target="_blank" class="yt-featured-link rounded-4 overflow-hidden shadow-lg d-block">
+                        <div class="yt-featured-thumb">
+                            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=450&fit=crop" alt="Featured Lesson">
+                            <div class="yt-play-overlay">
+                                <div class="yt-play-btn"><i class="bi bi-play-fill"></i></div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="yt-main-info mt-3">
+                        <h5><i class="bi bi-play-btn-fill text-danger me-2"></i>Featured: Introduction to Calculus</h5>
+                        <p class="text-muted small mb-0">Master the fundamentals of differential calculus with our step-by-step approach</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-left">
+                <div class="yt-playlist">
+                    <h6 class="text-uppercase text-muted small fw-bold mb-3"><i class="bi bi-collection-play me-2"></i>Popular Lessons</h6>
+                    <div class="yt-playlist-item">
+                        <div class="yt-thumb">
+                            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=120&h=70&fit=crop" alt="">
+                            <span class="yt-duration">12:34</span>
+                        </div>
+                        <div>
+                            <h6 class="small mb-0">Quadratic Equations</h6>
+                            <small class="text-muted">Grade 10 | Math</small>
+                        </div>
+                    </div>
+                    <div class="yt-playlist-item">
+                        <div class="yt-thumb">
+                            <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?w=120&h=70&fit=crop" alt="">
+                            <span class="yt-duration">18:45</span>
+                        </div>
+                        <div>
+                            <h6 class="small mb-0">Newton's Laws of Motion</h6>
+                            <small class="text-muted">Grade 11 | Physics</small>
+                        </div>
+                    </div>
+                    <div class="yt-playlist-item">
+                        <div class="yt-thumb">
+                            <img src="https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=120&h=70&fit=crop" alt="">
+                            <span class="yt-duration">15:20</span>
+                        </div>
+                        <div>
+                            <h6 class="small mb-0">Organic Chemistry Basics</h6>
+                            <small class="text-muted">Grade 12 | Chemistry</small>
+                        </div>
+                    </div>
+                    <div class="yt-playlist-item">
+                        <div class="yt-thumb">
+                            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=120&h=70&fit=crop" alt="">
+                            <span class="yt-duration">22:10</span>
+                        </div>
+                        <div>
+                            <h6 class="small mb-0">Python Data Structures</h6>
+                            <small class="text-muted">Grade 11 | CS</small>
+                        </div>
+                    </div>
+                    <a href="{{ site_settings.get('social_youtube', '#') }}" target="_blank" class="btn btn-danger w-100 mt-3">
+                        <i class="bi bi-youtube me-2"></i>Visit Our Channel
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
-{% endif %}
 
-<!-- Testimonials -->
+<!-- ========== WHY CHOOSE US ========== -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 order-lg-2" data-aos="fade-left">
+                <div class="why-images">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&h=600&fit=crop" alt="Students learning" class="why-img-main rounded-4 shadow-lg">
+                    <div class="why-badge-card">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="why-badge-icon"><i class="bi bi-patch-check-fill"></i></div>
+                            <div>
+                                <h6 class="mb-0">Trusted by Parents</h6>
+                                <small class="text-muted">4.9 average rating</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1" data-aos="fade-right">
+                <div class="section-badge mb-3">Why MathφCafe</div>
+                <h2 class="section-title mb-3">Everything Your Child <span class="text-gradient">Needs to Succeed</span></h2>
+                <p class="text-muted mb-4">We combine traditional teaching with modern tools to provide a complete learning experience.</p>
+
+                <div class="why-feature-list">
+                    <div class="why-feature-item" data-aos="fade-up" data-aos-delay="0">
+                        <div class="why-feature-icon" style="background:linear-gradient(135deg,#6C63FF,#a78bfa)"><i class="bi bi-people-fill"></i></div>
+                        <div>
+                            <h6>Expert Faculty</h6>
+                            <p class="text-muted small mb-0">Experienced teachers with B.Ed/M.Sc degrees and 10+ years of CBSE expertise</p>
+                        </div>
+                    </div>
+                    <div class="why-feature-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="why-feature-icon" style="background:linear-gradient(135deg,#FF6584,#fb923c)"><i class="bi bi-graph-up-arrow"></i></div>
+                        <div>
+                            <h6>Result Oriented</h6>
+                            <p class="text-muted small mb-0">98% pass rate with 50+ school toppers in the last 5 years</p>
+                        </div>
+                    </div>
+                    <div class="why-feature-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="why-feature-icon" style="background:linear-gradient(135deg,#00C9A7,#34d399)"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+                        <div>
+                            <h6>Study Material</h6>
+                            <p class="text-muted small mb-0">Comprehensive notes, worksheets, and video lessons aligned with NCERT</p>
+                        </div>
+                    </div>
+                    <div class="why-feature-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="why-feature-icon" style="background:linear-gradient(135deg,#F59E0B,#fbbf24)"><i class="bi bi-phone-fill"></i></div>
+                        <div>
+                            <h6>Parent App</h6>
+                            <p class="text-muted small mb-0">Track attendance, results, and communicate directly with teachers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== PHOTO GALLERY PREVIEW ========== -->
+<section class="py-5 bg-light-custom">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="section-badge mx-auto mb-3"><i class="bi bi-images me-1"></i>Gallery</div>
+            <h2 class="section-title" data-aos="fade-up">Life at <span class="text-gradient">MathφCafe</span></h2>
+        </div>
+        <div class="gallery-mosaic" data-aos="fade-up">
+            <div class="gallery-mosaic-item gallery-mosaic-wide">
+                <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=300&fit=crop" alt="Classroom">
+                <div class="gallery-mosaic-overlay"><i class="bi bi-zoom-in fs-3"></i><span>Classroom Sessions</span></div>
+            </div>
+            <div class="gallery-mosaic-item">
+                <img src="https://images.unsplash.com/photo-1627556704302-624286467c65?w=300&h=300&fit=crop" alt="Achievements">
+                <div class="gallery-mosaic-overlay"><i class="bi bi-zoom-in fs-3"></i><span>Achievements</span></div>
+            </div>
+            <div class="gallery-mosaic-item">
+                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=300&h=300&fit=crop" alt="Lab">
+                <div class="gallery-mosaic-overlay"><i class="bi bi-zoom-in fs-3"></i><span>Science Labs</span></div>
+            </div>
+            <div class="gallery-mosaic-item">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=300&h=300&fit=crop" alt="Teaching">
+                <div class="gallery-mosaic-overlay"><i class="bi bi-zoom-in fs-3"></i><span>Expert Teaching</span></div>
+            </div>
+            <div class="gallery-mosaic-item">
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=300&h=300&fit=crop" alt="Students">
+                <div class="gallery-mosaic-overlay"><i class="bi bi-zoom-in fs-3"></i><span>Student Life</span></div>
+            </div>
+            <div class="gallery-mosaic-item gallery-mosaic-wide">
+                <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=300&fit=crop" alt="Events">
+                <div class="gallery-mosaic-overlay"><i class="bi bi-zoom-in fs-3"></i><span>Student Events</span></div>
+            </div>
+        </div>
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{{ url_for('public.gallery') }}" class="btn btn-outline-primary px-4">
+                <i class="bi bi-images me-2"></i>View Full Gallery
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
 {% if testimonials %}
 <section class="py-5">
     <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <h2 class="section-title">What Our <span class="text-gradient">Students Say</span></h2>
-            <p class="section-subtitle text-muted">Hear from our successful students</p>
+        <div class="text-center mb-5">
+            <div class="section-badge mx-auto mb-3"><i class="bi bi-chat-quote me-1"></i>Testimonials</div>
+            <h2 class="section-title" data-aos="fade-up">What Our <span class="text-gradient">Students Say</span></h2>
+            <p class="section-subtitle text-muted" data-aos="fade-up" data-aos-delay="100">Real stories from real students</p>
         </div>
         <div class="row g-4">
+            {% set avatar_colors = ['6C63FF', 'FF6584', '00C9A7', 'F59E0B', '8B5CF6', 'EC4899'] %}
             {% for t in testimonials[:3] %}
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
-                <div class="testimonial-card p-4 h-100">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 150 }}">
+                <div class="testimonial-card-v2">
+                    <div class="testimonial-quote"><i class="bi bi-quote"></i></div>
                     <div class="mb-3">{{ star_rating(t.rating) }}</div>
-                    <p class="text-muted mb-3">"{{ t.content }}"</p>
-                    <div class="d-flex align-items-center">
-                        <div class="rounded-circle bg-primary-soft d-flex align-items-center justify-content-center me-3" style="width:45px;height:45px">
-                            <i class="bi bi-person text-primary"></i>
-                        </div>
+                    <p class="text-muted mb-4">"{{ t.content }}"</p>
+                    <div class="testimonial-author">
+                        <img src="https://ui-avatars.com/api/?name={{ t.student_name|urlencode }}&background={{ avatar_colors[loop.index0 % 6] }}&color=fff&size=48&bold=true" alt="{{ t.student_name }}" class="testimonial-avatar">
                         <div>
                             <h6 class="mb-0">{{ t.student_name }}</h6>
                             {% if t.grade %}<small class="text-muted">{{ t.grade }}</small>{% endif %}
@@ -204,23 +499,39 @@
         </div>
         {% if testimonials|length > 3 %}
         <div class="text-center mt-4">
-            <a href="{{ url_for('public.testimonials') }}" class="btn btn-outline-primary">View All Testimonials</a>
+            <a href="{{ url_for('public.testimonials') }}" class="btn btn-outline-primary px-4">View All Testimonials</a>
         </div>
         {% endif %}
     </div>
 </section>
 {% endif %}
 
-<!-- CTA -->
-<section class="cta-section">
+<!-- ========== CTA ========== -->
+<section class="cta-section-v2">
+    <div class="cta-bg-shapes">
+        <div class="cta-shape cta-shape-1"></div>
+        <div class="cta-shape cta-shape-2"></div>
+        <div class="cta-shape cta-shape-3"></div>
+    </div>
     <div class="container text-center position-relative" style="z-index:2">
-        <h2 class="text-white display-6 fw-bold mb-3" data-aos="fade-up">Ready to Excel in Academics?</h2>
-        <p class="text-white-50 fs-5 mb-4" data-aos="fade-up" data-aos-delay="100">
-            Join MathφCafe today and take the first step towards academic excellence.
-        </p>
-        <a href="{{ url_for('public.contact') }}" class="btn btn-light btn-lg px-5" data-aos="fade-up" data-aos-delay="200">
-            <i class="bi bi-send me-2"></i>Get in Touch
-        </a>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="text-white display-5 fw-bold mb-3" data-aos="fade-up">
+                    Ready to <span style="color:var(--accent)">Excel</span> in Academics?
+                </h2>
+                <p class="text-white-50 fs-5 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Join 500+ students who transformed their academic journey with MathφCafe. Admissions open for 2026-27.
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap" data-aos="fade-up" data-aos-delay="200">
+                    <a href="{{ url_for('public.contact') }}" class="btn btn-light btn-lg px-5 fw-semibold">
+                        <i class="bi bi-send-fill me-2"></i>Enroll Now
+                    </a>
+                    <a href="tel:{{ site_settings.get('phone', '+91XXXXXXXXXX') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-telephone-fill me-2"></i>Call Us
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}
