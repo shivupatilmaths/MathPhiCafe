@@ -28,9 +28,16 @@ else
     git clone "$REPO_URL" "$PROJECT_DIR"
 fi
 
-# 2. Create virtualenv
+# 2. Create virtualenv using mkvirtualenv (PythonAnywhere built-in)
+#    This produces a proper virtualenv with activate_this.py
 echo "[2/6] Setting up Python virtualenv..."
-python3.11 -m venv "$VENV_DIR"
+source /usr/local/lib/python3.11/dist-packages/virtualenvwrapper/virtualenvwrapper.sh 2>/dev/null || \
+    source ~/.bashrc 2>/dev/null || true
+if [ ! -d "$VENV_DIR" ]; then
+    mkvirtualenv --python=python3.11 mathphicafe
+else
+    echo "Virtualenv already exists, skipping creation."
+fi
 source "$VENV_DIR/bin/activate"
 
 # 3. Install dependencies
@@ -51,9 +58,17 @@ echo "[5/6] Seeding database..."
 cd "$PROJECT_DIR"
 python seed.py
 
-# 6. Generate WSGI file for this user
+# 6. Generate WSGI file with your username and a fresh random SECRET_KEY
 echo "[6/6] Writing WSGI config file..."
+SECRET=$(python3 -c "import secrets; print(secrets.token_hex(32))")
+
 cat > "$PROJECT_DIR/pythonanywhere_wsgi_live.py" <<WSGI
+# -------------------------------------------------------
+#  PythonAnywhere WSGI config for MathPhiCafe
+#  Paste this into your WSGI file in the Web tab.
+#  (The virtualenv is activated automatically by PythonAnywhere
+#   when you set it in the Web tab — no activate_this needed.)
+# -------------------------------------------------------
 import sys
 import os
 
@@ -61,11 +76,7 @@ project_home = '/home/$USERNAME/MathPhiCafe'
 if project_home not in sys.path:
     sys.path.insert(0, project_home)
 
-os.environ['SECRET_KEY'] = '$(python3 -c "import secrets; print(secrets.token_hex(32))")'
-
-activate_this = '/home/$USERNAME/.virtualenvs/mathphicafe/bin/activate_this.py'
-with open(activate_this) as f:
-    exec(f.read(), {'__file__': activate_this})
+os.environ['SECRET_KEY'] = '$SECRET'
 
 from run import app as application  # noqa
 WSGI
@@ -77,22 +88,28 @@ echo "========================================"
 echo ""
 echo "NEXT STEPS (do these in your browser):"
 echo ""
-echo "1. Go to: https://www.pythonanywhere.com/user/$USERNAME/webapps/add/"
-echo "   -> Choose 'Manual configuration' -> Python 3.11 -> Next"
+echo "1. Go to the Web tab -> Add a new web app"
+echo "   -> Manual configuration -> Python 3.11 -> Next"
 echo ""
 echo "2. In the Web tab, set:"
 echo "   Source code    : $PROJECT_DIR"
 echo "   Working dir    : $PROJECT_DIR"
 echo "   Virtualenv     : $VENV_DIR"
 echo ""
-echo "3. Click 'WSGI configuration file' link, then REPLACE all its"
-echo "   content with the content of:"
+echo "3. Click the 'WSGI configuration file' link."
+echo "   SELECT ALL and DELETE everything, then paste the"
+echo "   contents of this file:"
 echo "   $PROJECT_DIR/pythonanywhere_wsgi_live.py"
 echo ""
-echo "4. Click the green 'Reload $USERNAME.pythonanywhere.com' button"
+echo "   To view it, run:"
+echo "   cat $PROJECT_DIR/pythonanywhere_wsgi_live.py"
 echo ""
-echo "5. Your site is live at: https://$USERNAME.pythonanywhere.com"
+echo "4. Save the WSGI file, then click the green"
+echo "   'Reload $USERNAME.pythonanywhere.com' button."
+echo ""
+echo "5. Your site is live at:"
+echo "   https://$USERNAME.pythonanywhere.com"
 echo ""
 echo "   Admin login -> username: admin | password: admin123"
-echo "   (Change the password immediately after logging in!)"
+echo "   (Change the password right after first login!)"
 echo ""

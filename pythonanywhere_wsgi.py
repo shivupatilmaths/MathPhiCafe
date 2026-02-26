@@ -1,32 +1,29 @@
 # ============================================================
-#  PythonAnywhere WSGI configuration for MathPhiCafe
+#  PythonAnywhere WSGI config for MathPhiCafe  (manual template)
 #
-#  HOW TO USE:
-#  Copy this file's content into your PythonAnywhere WSGI file.
-#  The WSGI file path looks like:
-#    /var/www/USERNAME_pythonanywhere_com_wsgi.py
+#  The setup script (pythonanywhere_setup.sh) generates a
+#  ready-to-use version of this file called
+#  pythonanywhere_wsgi_live.py with YOUR username and a
+#  random SECRET_KEY already filled in.
 #
-#  Replace YOUR_USERNAME with your PythonAnywhere username below.
+#  If you prefer to fill it in manually, use this template:
+#  1. Replace YOUR_USERNAME with your PythonAnywhere username
+#  2. Generate a secret key:
+#       python3 -c "import secrets; print(secrets.token_hex(32))"
+#  3. Paste into the WSGI file shown in the Web tab
+#
+#  NOTE: The virtualenv is activated automatically by PythonAnywhere
+#  when you set the "Virtualenv" field in the Web tab.
+#  You do NOT need activate_this.py here.
 # ============================================================
 
 import sys
 import os
 
-# ---- 1. Set your username here ----
-USERNAME = 'YOUR_USERNAME'
-# -----------------------------------
-
-project_home = f'/home/{USERNAME}/MathPhiCafe'
+project_home = '/home/YOUR_USERNAME/MathPhiCafe'
 if project_home not in sys.path:
     sys.path.insert(0, project_home)
 
-# Activate the virtualenv
-activate_this = f'/home/{USERNAME}/.virtualenvs/mathphicafe/bin/activate_this.py'
-with open(activate_this) as f:
-    exec(f.read(), {'__file__': activate_this})
+os.environ['SECRET_KEY'] = 'REPLACE_WITH_OUTPUT_OF_secrets.token_hex(32)'
 
-# Set a strong secret key (generate one at: python3 -c "import secrets; print(secrets.token_hex(32))")
-os.environ['SECRET_KEY'] = 'REPLACE_WITH_A_RANDOM_64_CHAR_SECRET'
-
-# Import Flask app
 from run import app as application  # noqa
